@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.JJzMapper">
+  <resultMap id="JJZ" type="org.lf.jssm.db.pojo.JJZ">
+		<result column="id" jdbcType="VARCHAR" property="id" /> 
+ 		<result column="ewm" jdbcType="VARCHAR" property="ewm" /> 
+ 		<result column="jzmc" jdbcType="VARCHAR" property="jzmc" />
+ 		<result column="ah" jdbcType="VARCHAR" property="ah" /> 
+ 		<result column="spcx1" jdbcType="VARCHAR" property="spcx1" />
+ 		<result column="spjg1" jdbcType="VARCHAR" property="spjg1" />
+ 		<result column="spcx2" jdbcType="VARCHAR" property="spcx2" />
+ 		<result column="spjg2" jdbcType="VARCHAR" property="spjg2" />
+ 		<result column="gdrq" jdbcType="TIMESTAMP" property="gdrq" />
+ 		<result column="gdhs" jdbcType="DECIMAL" property="gdhs" />
+ 		<result column="yjfl" jdbcType="VARCHAR" property="yjfl" />
+ 		<result column="jbdm" jdbcType="VARCHAR" property="jbdm" />
+ 		<result column="qxdm" jdbcType="VARCHAR" property="qxdm" />
+ 		<result column="jh" jdbcType="DECIMAL" property="jh" />
+ 		<result column="tjlb" jdbcType="VARCHAR" property="tjlb" />
+ 		<result column="jzlx" jdbcType="VARCHAR" property="jzlx" />
+ 		<result column="status" jdbcType="DECIMAL" property="status" />
+ 		<result column="CREATOR_ID" jdbcType="DECIMAL" property="creator_id" />
+ 		<result column="create_date" jdbcType="TIMESTAMP" property="create_date" />
+ 		<result column="tybz" jdbcType="VARCHAR" property="tybz" />
+ 		<result column="remark" jdbcType="VARCHAR" property="remark" />
+ 		<result column="zlfs" jdbcType="CHAR" property="zlfs" />
+ 		<result column="SYYM" jdbcType="DECIMAL" property="syym" />
+  </resultMap>
+  <resultMap type="org.lf.jssm.service.tdh.TdhJz" id="TdhJz">
+      <result column="ewm" jdbcType="VARCHAR" property="ewm" /> 
+      <result column="jzmc" jdbcType="VARCHAR" property="jzmc" />
+ 	  <result column="ah" jdbcType="VARCHAR" property="ah" />
+ 	  <result column="jh" jdbcType="DECIMAL" property="jh" />
+ 	  <result column="jzlx" jdbcType="VARCHAR" property="jzlx" />
+  </resultMap>
+  <insert id="insertNew" parameterType="org.lf.jssm.db.pojo.JJZ">
+		insert into J_JZ (ID, EWM, JZMC, 
+	      AH, SPCX1, SPJG1, SPCX2, 
+	      SPJG2, GDRQ, GDHS, 
+	      YJFL, JBDM, QXDM, JH, 
+	      TJLB, JZLX, STATUS, 
+	      CREATOR_ID, CREATE_DATE, TYBZ, 
+	      REMARK, ZLFS, SYYM)
+	    values (#{id,jdbcType=VARCHAR}, #{ewm,jdbcType=VARCHAR}, #{jzmc,jdbcType=VARCHAR}, 
+	      #{ah,jdbcType=VARCHAR}, #{spcx1,jdbcType=CHAR}, #{spjg1,jdbcType=VARCHAR}, #{spcx2,jdbcType=CHAR}, 
+	      #{spjg2,jdbcType=VARCHAR}, #{gdrq,jdbcType=TIMESTAMP}, #{gdhs,jdbcType=DECIMAL}, 
+	      #{yjfl,jdbcType=VARCHAR}, #{jbdm,jdbcType=VARCHAR}, #{qxdm,jdbcType=VARCHAR}, #{jh,jdbcType=DECIMAL}, 
+	      #{tjlb,jdbcType=VARCHAR}, #{jzlx,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, 
+	      #{creator_id,jdbcType=DECIMAL}, #{create_date,jdbcType=TIMESTAMP}, #{tybz,jdbcType=CHAR}, 
+	      #{remark,jdbcType=VARCHAR}, #{zlfs,jdbcType=CHAR}, #{syym,jdbcType=DECIMAL})
+	</insert>
+	
+  <insert id="insert4CreateJz" parameterType="org.lf.jssm.service.model.NewJzModel">
+		insert into J_JZ (ID, EWM, JZMC, 
+	      AH, SPCX1, SPJG1, SPCX2, 
+	      SPJG2, GDRQ, GDHS, 
+	      YJFL, JBDM, QXDM, JH, 
+	      TJLB, JZLX, STATUS, 
+	      CREATOR_ID, CREATE_DATE, TYBZ, 
+	      REMARK, ZLFS, SYYM)
+	    values (#{id,jdbcType=VARCHAR}, #{ewm,jdbcType=VARCHAR}, #{jzmc,jdbcType=VARCHAR}, 
+	      #{ah,jdbcType=VARCHAR}, #{spcx1,jdbcType=CHAR}, #{spjg1,jdbcType=VARCHAR}, #{spcx2,jdbcType=CHAR}, 
+	      #{spjg2,jdbcType=VARCHAR}, #{gdrq,jdbcType=TIMESTAMP}, #{gdhs,jdbcType=DECIMAL}, 
+	      #{yjfl,jdbcType=VARCHAR}, #{jbdm,jdbcType=VARCHAR}, #{qxdm,jdbcType=VARCHAR}, #{jh,jdbcType=DECIMAL}, 
+	      #{tjlb,jdbcType=VARCHAR}, #{jzlx,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, 
+	      #{creator_id,jdbcType=DECIMAL}, #{create_date,jdbcType=TIMESTAMP}, #{tybz,jdbcType=CHAR}, 
+	      #{remark,jdbcType=VARCHAR}, #{zlfs,jdbcType=CHAR}, #{syym,jdbcType=DECIMAL})
+	</insert>
+	
+  <select id="getCountByEwm" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select  count(EWM)
+    from J_JZ
+    where EWM = #{ewm,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectBycondition" parameterType="org.lf.jssm.db.pojo.JJZ" resultMap="JJZ">
+      select  *
+	    from J_JZ
+	  <where>
+	      <if test="ewm!=null">
+		    and EWM = #{ewm,jdbcType=VARCHAR}
+	      </if>
+	      <if test="jh!=null">
+		    and jh = #{jh,jdbcType=DECIMAL}
+	      </if>
+	  </where>
+  </select>
+  
+  <select id="selectByAh4Tdh" parameterType="java.lang.String" resultMap="TdhJz">
+      select EWM,AH,JH,JZLX,JZMC
+	    from J_JZ
+	  where ah = #{archiveno,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getJzEwm4Tdh" parameterType="org.lf.jssm.service.tdh.TdhJz" resultType="java.lang.String">
+      select EWM
+	    from J_JZ
+	  where jzmc = #{jzmc,jdbcType=VARCHAR}
+	  	and jh = #{jh,jdbcType=DECIMAL}
+	  	and jzlx = #{jzlx,jdbcType=VARCHAR}
+	  	and ah = #{ah,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.JWlryMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.JWlry">
+    <id column="ID" jdbcType="CHAR" property="id" />
+    <result column="RYMC" jdbcType="VARCHAR" property="rymc" />
+    <result column="RYLX" jdbcType="CHAR" property="rylx" />
+    <result column="ZJLX" jdbcType="CHAR" property="zjlx" />
+    <result column="GZDW" jdbcType="VARCHAR" property="gzdw" />
+    <result column="LXFS" jdbcType="VARCHAR" property="lxfs" />
+    <result column="DJDN" jdbcType="CHAR" property="djdn" />
+    <result column="CREATOR_ID" jdbcType="DECIMAL" property="creatorId" />
+    <result column="KSRQ" jdbcType="TIMESTAMP" property="ksrq" />
+    <result column="JSRQ" jdbcType="TIMESTAMP" property="jsrq" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="PRINT" jdbcType="CHAR" property="print" />
+    <result column="ZJHM" jdbcType="VARCHAR" property="zjhm" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RYMC, RYLX, ZJLX, GZDW, LXFS, DJDN, CREATOR_ID, KSRQ, JSRQ, STATUS, REMARK,PRINT,ZJHM
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from J_WLRY
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from J_WLRY
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.JWlry">
+    insert into J_WLRY (ID, RYMC, RYLX, ZJLX, 
+      GZDW, LXFS, DJDN, CREATOR_ID, 
+      KSRQ, JSRQ, STATUS, 
+      REMARK,PRINT,ZJHM)
+    values (#{id,jdbcType=CHAR}, #{rymc,jdbcType=VARCHAR}, #{rylx,jdbcType=CHAR}, #{zjlx,jdbcType=CHAR}, 
+      #{gzdw,jdbcType=VARCHAR}, #{lxfs,jdbcType=VARCHAR}, #{djdn,jdbcType=CHAR}, #{creatorId,jdbcType=DECIMAL}, 
+      #{ksrq,jdbcType=TIMESTAMP}, #{jsrq,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, 
+      #{remark,jdbcType=VARCHAR},#{print,jdbcType=CHAR},#{zjhm,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.lf.jssm.db.pojo.JWlry">
+    update J_WLRY
+    set RYMC = #{rymc,jdbcType=VARCHAR},
+      RYLX = #{rylx,jdbcType=CHAR},
+      ZJLX = #{zjlx,jdbcType=CHAR},
+      GZDW = #{gzdw,jdbcType=VARCHAR},
+      LXFS = #{lxfs,jdbcType=VARCHAR},
+      DJDN = #{djdn,jdbcType=CHAR},
+      CREATOR_ID = #{creatorId,jdbcType=DECIMAL},
+      KSRQ = #{ksrq,jdbcType=TIMESTAMP},
+      JSRQ = #{jsrq,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=CHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      PRINT = #{print,jdbcType=VARCHAR},
+      ZJHM = #{zjhm,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

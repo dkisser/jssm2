@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.jssm.db.dao.ChuRoleMapper" >
+  <resultMap id="Role" type="org.lf.jssm.db.pojo.ChuRole">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+	</resultMap>
+	
+<!-- 	<resultMap id="ChuCharacters" type="org.lf.jssm.service.model.ChuCharacters"> -->
+<!--     <id column="Id" jdbcType="INTEGER" property="id" /> -->
+<!--     <result column="name" jdbcType="VARCHAR" property="name" /> -->
+<!--   	</resultMap> -->
+  	
+  	 <!-- 查询表格数据 -->
+	  <resultMap id="RolePrivilege" type="org.lf.jssm.db.pojo.RolePrivilege">
+	    <id column="ID" jdbcType="INTEGER" property="priv_id" />
+	    <result column="NAME" jdbcType="VARCHAR" property="priv_name" />
+	    <result column="URL" jdbcType="VARCHAR" property="url" />
+	    <result column="ICON_CLASS" jdbcType="VARCHAR" property="iconClass" />
+	    <result column="KEY_NAME" jdbcType="VARCHAR" property="keyName" />
+	    <result column="PID" jdbcType="INTEGER" property="pid" />
+	    <result column="MENU_LEVEL" jdbcType="INTEGER" property="level" />
+	    <result column="FLAG" jdbcType="INTEGER" property="flag" />
+	    <result column="CHECKED" jdbcType="BIT" property="checked" />
+	  </resultMap>
+	  
+	  <select id="selectByRoleId" parameterType="int" resultMap="RolePrivilege">
+	  	select m.*, case when NVL(rm.menu_id, 0) = 0 then 0 else 1 end checked from chu_menu m left outer join chu_role_menu rm on rm.menu_id = m.id and rm.role_id = #{id}
+	  </select>
+  
+  	<resultMap id="ChuRoleMenuList" type="org.lf.jssm.service.model.ChuRoleMenuList">
+	    <id column="role_id" jdbcType="INTEGER" property="role_id" />
+	    <result column="role_name" jdbcType="VARCHAR" property="role_name" />
+	    <result column="status" jdbcType="VARCHAR" property="status" />
+	    <result column="priv_list" jdbcType="VARCHAR" property="priv_list" />
+  	</resultMap>
+  	<select id="selectChuRoleMenuList" resultMap="ChuRoleMenuList">
+	select r.id role_id,r.name role_name,r.status , wm_concat(m.name) priv_list from chu_role r, chu_role_menu rm, chu_menu m where rm.role_id = r.id and rm.menu_id = m.id and m.menu_level = 2 and r.id in(select r.id from chu_role r ) group by r.id,r.name,r.status 
+  	</select>
+  	
+  	
+  	
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from CHU_ROLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.ChuRole" >
+    insert into CHU_ROLE (ID, NAME, STATUS
+      )
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertIntoPower" parameterType="org.lf.jssm.db.pojo.ChuRoleMenu">
+    insert into chu_role_menu (ROLE_ID, MENU_ID, ID
+      )
+    values (#{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}
+      )
+  </insert>
+ 
+</mapper>

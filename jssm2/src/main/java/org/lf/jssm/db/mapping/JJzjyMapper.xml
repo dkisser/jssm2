@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.JJzjyMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.JJzjy">
+    <id column="ID" jdbcType="CHAR" property="id" />
+    <result column="WLRY_ID" jdbcType="CHAR" property="wlryId" />
+    <result column="JZEWM" jdbcType="VARCHAR" property="jzewm" />
+  </resultMap>
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.JJzjy">
+    insert into J_JZJY (ID, WLRY_ID, JZEWM)
+    values (#{id,jdbcType=CHAR}, #{wlryId,jdbcType=CHAR}, #{jzewm,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="org.lf.jssm.db.pojo.JJzjy">
+    update J_JZJY
+    set WLRY_ID = #{wlryId,jdbcType=CHAR},
+      JZEWM = #{jzewm,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

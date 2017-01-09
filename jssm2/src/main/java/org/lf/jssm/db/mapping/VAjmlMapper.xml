@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.VAjmlMapper">
+  <resultMap id="VAjml" type="org.lf.jssm.db.pojo.VAjml">
+		<result column="yjfl" jdbcType="VARCHAR" property="yjfl" />
+		<result column="lx" jdbcType="VARCHAR" property="lx" />
+		<result column="pcmc" jdbcType="VARCHAR" property="pcmc" />
+		<result column="pcdm" jdbcType="VARCHAR" property="pcdm" />
+ 		<result column="mlid" jdbcType="VARCHAR" property="mlid" /> 
+ 		<result column="mlmc" jdbcType="VARCHAR" property="mlmc" />
+  </resultMap>  
+  
+</mapper>

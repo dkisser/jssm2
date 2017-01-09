@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.CMlpcMapper">
+	<resultMap id="CMlpcMap" type="org.lf.jssm.db.pojo.CMlpc">
+		<result column="dm" jdbcType="CHAR" property="dm" />
+		<result column="fydm" jdbcType="NUMERIC" property="fydm" />
+		<result column="qynd" jdbcType="CHAR" property="qynd" />
+		<result column="zhdm" jdbcType="VARCHAR" property="zhdm" />
+		<result column="lx" jdbcType="VARCHAR" property="lx" />
+		<result column="pcmc" jdbcType="VARCHAR" property="pcmc" />
+		<result column="pym" jdbcType="VARCHAR" property="pym" />
+		<result column="tybz" jdbcType="CHAR" property="tybz" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="status" jdbcType="CHAR" property="status" />
+	</resultMap>
+
+	  <resultMap id="ChuCMlpcMap" type="org.lf.jssm.service.model.ChuCMlpc" >
+    <id column="DM" property="dm" jdbcType="CHAR" />
+    <result column="FYDM" property="fydm" jdbcType="VARCHAR" />
+    <result column="QYND" property="qynd" jdbcType="CHAR" />
+    <result column="ZHDM" property="zhdm" jdbcType="VARCHAR" />
+    <result column="LX" property="lx" jdbcType="VARCHAR" />
+    <result column="PCMC" property="pcmc" jdbcType="VARCHAR" />
+    <result column="PYM" property="pym" jdbcType="VARCHAR" />
+    <result column="TYBZ" property="tybz" jdbcType="CHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="MC" property="mc" jdbcType="CHAR" />
+  </resultMap>
+</mapper>

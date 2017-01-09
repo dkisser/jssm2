@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.JAjuanDMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.JAjuanD">
+    <id column="EWM" jdbcType="VARCHAR" property="ewm" />
+    <result column="AJ_EWM" jdbcType="VARCHAR" property="aj_ewm" />
+    <result column="MLDM" jdbcType="CHAR" property="mldm" />
+    <result column="ZMLID" jdbcType="CHAR" property="zmlid" />
+    <result column="ZML" jdbcType="VARCHAR" property="zml" />
+    <result column="NBBH" jdbcType="DECIMAL" property="nbbh" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    EWM, AJ_EWM, MLDM, ZMLID, ZML, NBBH
+  </sql>
+  
+  
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.JAjuanD">
+    insert into J_AJUAN_D (EWM, AJ_EWM, MLDM, 
+      ZMLID, ZML, NBBH)
+    values (#{ewm,jdbcType=VARCHAR}, #{aj_ewm,jdbcType=VARCHAR}, #{mldm,jdbcType=CHAR}, 
+      #{zmlid,jdbcType=CHAR}, #{zml,jdbcType=VARCHAR}, #{nbbh,jdbcType=DECIMAL})
+  </insert>
+  
+  <select id="getPicMaxNbbh" parameterType="org.lf.jssm.db.pojo.JAjuanD" resultType="java.lang.Integer">
+      select  max(jad.NBBH)  NBBH
+      from J_AJUAN_D jad
+  	  where jad.MLDM = #{mldm,jdbcType=CHAR}
+  	  and jad.AJ_EWM = #{aj_ewm,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getCountsByPicEwm" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select  count(EWM)
+    from J_AJUAN_D
+    where EWM = #{ewm,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByEwm" parameterType="java.lang.String">
+      delete from J_AJUAN_D
+      where EWM = #{ewm,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="getJadInfo" parameterType="org.lf.jssm.db.pojo.JAjuanD" resultMap="BaseResultMap">
+      select 
+      <include refid="Base_Column_List" />
+	   from J_AJUAN_D
+	   where EWM = #{ewm,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getBehindJad" parameterType="org.lf.jssm.db.pojo.JAjuanD" resultMap="BaseResultMap">
+      select 
+      <include refid="Base_Column_List" />
+	   from J_AJUAN_D 
+	   where MLDM = #{mldm,jdbcType=CHAR}
+	   and NBBH &gt; #{nbbh,jdbcType=DECIMAL}
+  	   and AJ_EWM = #{aj_ewm,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="update" parameterType="org.lf.jssm.db.pojo.JAjuanD">
+     update J_AJUAN_D
+    <set>
+      <if test="zmlid != null">
+        ZMLID = #{zmlid,jdbcType=CHAR},
+      </if>
+      <if test="zml != null">
+        ZML = #{zml,jdbcType=VARCHAR},
+      </if>
+      <if test="nbbh != null">
+        NBBH = #{nbbh,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where EWM = #{ewm,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateall" parameterType="org.lf.jssm.db.pojo.JAjuanD">
+     update J_AJUAN_D
+    <set>
+       <if test="mldm != null">
+        MLDM = #{mldm,jdbcType=CHAR},
+      </if>
+      <if test="zmlid != null">
+        ZMLID = #{zmlid,jdbcType=CHAR},
+      </if>
+      <if test="zml != null">
+        ZML = #{zml,jdbcType=VARCHAR},
+      </if>
+      <if test="nbbh != null">
+        NBBH = #{nbbh,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where EWM = #{ewm,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getJadBetweenAnd" parameterType="org.lf.jssm.db.pojo.JAjuanD" resultMap="BaseResultMap">
+      select 
+      <include refid="Base_Column_List" />
+	   from J_AJUAN_D 
+	   where NBBH &gt; #{startNbbh,jdbcType=DECIMAL}
+	   and NBBH &lt; #{endNbbh,jdbcType=DECIMAL}
+	   <if test="mldm != null">
+	       and MLDM = #{mldm,jdbcType=CHAR}
+	   </if>
+  	   and AJ_EWM = #{aj_ewm,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getJadsByCondition" parameterType="org.lf.jssm.db.pojo.JAjuanD" resultMap="BaseResultMap">
+      select 
+      <include refid="Base_Column_List" />
+	   from J_AJUAN_D 
+	   <where>
+	       <if test="ewm != null">
+	       		and EWM = #{ewm,jdbcType=VARCHAR}
+	       </if>
+	       <if test="mldm != null">
+	       		and MLDM = #{mldm,jdbcType=CHAR}
+	       </if>
+	       <if test="aj_ewm != null">
+	       		and AJ_EWM = #{aj_ewm,jdbcType=VARCHAR}
+	       </if>
+	       <if test="zml != null">
+	        	and ZML = #{zml,jdbcType=VARCHAR}
+	       </if>
+	       <if test="zmlid != null">
+	        	and ZMLID = #{zmlid,jdbcType=VARCHAR}
+	       </if>
+	   </where>
+	   ORDER BY NBBH
+  </select>
+  
+  <select id="getAllLabsInfo" parameterType="org.lf.jssm.db.pojo.JAjuanD" resultMap="BaseResultMap">
+      select distinct ZMLID, ZML
+	   from J_AJUAN_D 
+	   where MLDM LIKE  #{mldm,jdbcType=CHAR}||'%'
+	   		and AJ_EWM = #{aj_ewm,jdbcType=VARCHAR}
+	   		and ZML IS NOT NULL
+	   		and ZMLID IS NOT NULL
+  </select>
+  
+  
+    <update id="setZml2Null" parameterType="org.lf.jssm.db.pojo.JAjuanD">
+	    update J_AJUAN_D
+	    set ZMLID = #{zmlid,jdbcType=CHAR},
+	    ZML = #{zml,jdbcType=VARCHAR}
+	    where EWM = #{ewm,jdbcType=VARCHAR}
+	</update>
+</mapper>

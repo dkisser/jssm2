@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.JRawfileMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.JRawfile">
+    <id column="EWM" jdbcType="VARCHAR" property="ewm" />
+    <result column="SCAN_YEAR" jdbcType="CHAR" property="scanYear" />
+    <result column="SCAN_MONTH" jdbcType="CHAR" property="scanMonth" />
+    <result column="SCAN_DAY" jdbcType="CHAR" property="scanDay" />
+    <result column="FILE_SIZE" jdbcType="DECIMAL" property="fileSize" />
+    <result column="FILE_SUFFIX" jdbcType="VARCHAR" property="fileSuffix" />
+    <result column="MODIFY_DATE" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="FILE_STATUS" jdbcType="INTEGER" property="fileStatus" />
+    <result column="SCANER_ID" jdbcType="INTEGER" property="scanerId" />
+    <result column="FILE_VERSION" jdbcType="INTEGER" property="fileVersion" />
+  </resultMap>
+  <resultMap id="getDaymap" type="org.lf.jssm.service.model.DayInfo">
+		<result column="SCAN_DAY" jdbcType="CHAR" property="day"/>
+		<result column="count" jdbcType="NUMERIC" property="count"/>
+	</resultMap>
+	<select id="SelectByMonth" resultMap="getDaymap" >
+		select SCAN_DAY,count(*) count from j_rawfile 
+		where SCAN_YEAR=#{year,jdbcType=NUMERIC} and SCAN_MONTH=#{month,jdbcType=NUMERIC}
+		group by SCAN_DAY
+		order by SCAN_DAY asc
+	</select>
+  <sql id="Base_Column_List">
+    EWM, SCAN_YEAR, SCAN_MONTH, SCAN_DAY, FILE_SIZE, FILE_SUFFIX, MODIFY_DATE, FILE_STATUS,SCANER_ID,FILE_VERSION
+  </sql>
+  
+  
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.JRawfile">
+    insert into J_RAWFILE (EWM, SCAN_YEAR, SCAN_MONTH, 
+      SCAN_DAY, FILE_SIZE, FILE_SUFFIX, 
+      MODIFY_DATE, FILE_STATUS,SCANER_ID,FILE_VERSION)
+    values (#{ewm,jdbcType=VARCHAR}, #{scanYear,jdbcType=CHAR}, #{scanMonth,jdbcType=CHAR}, 
+      #{scanDay,jdbcType=CHAR}, #{fileSize,jdbcType=DECIMAL}, #{fileSuffix,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{fileStatus,jdbcType=INTEGER},#{scanerId,jdbcType=INTEGER},#{fileVersion,jdbcType=INTEGER})
+  </insert>
+  
+  
+  <select id="getSavedRawFile" parameterType="org.lf.jssm.db.pojo.JRawfile" resultMap="BaseResultMap">
+      select 
+    	<include refid="Base_Column_List" />
+	    from J_RAWFILE
+	    where FILE_STATUS &gt; 1
+	    	  and  EWM = #{ewm,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteRawFileInfo" parameterType="org.lf.jssm.db.pojo.JRawfile">
+		delete from J_RAWFILE
+		where EWM = #{ewm,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <update id="updateByJf" parameterType="org.lf.jssm.db.pojo.JRawfile">
+    update J_RAWFILE
+    <set>
+      <if test="scanYear != null">
+        SCAN_YEAR = #{scanYear,jdbcType=CHAR},
+      </if>
+      <if test="scanMonth != null">
+        SCAN_MONTH = #{scanMonth,jdbcType=CHAR},
+      </if>
+      <if test="scanDay != null">
+        SCAN_DAY = #{scanDay,jdbcType=CHAR},
+      </if>
+      <if test="fileSize != null">
+        FILE_SIZE = #{fileSize,jdbcType=DECIMAL},
+      </if>
+      <if test="fileSuffix != null">
+        FILE_SUFFIX = #{fileSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileStatus != null">
+        FILE_STATUS = #{fileStatus,jdbcType=INTEGER},
+      </if>
+      <if test="scanerId != null">
+        SCANER_ID = #{scanerId,jdbcType=INTEGER},
+      </if>
+      <if test="fileVersion != null">
+        FILE_VERSION = #{fileVersion,jdbcType=INTEGER},
+      </if>
+    </set>
+    where EWM = #{ewm,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getRawFilesCounts4History" resultType="java.lang.Integer">
+      select 
+    	count(EWM)
+	    from J_RAWFILE
+	    where SCANER_ID = #{userId,jdbcType=INTEGER}
+	    and MODIFY_DATE &gt;=#{startDate,jdbcType=TIMESTAMP}
+	    and MODIFY_DATE &lt;=#{endDate,jdbcType=TIMESTAMP}
+	    and FILE_STATUS &gt; 1
+	    and EWM != '10000'
+  </select>
+  
+  
+  <select id="getRawFileByEwm" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select * from J_RAWFILE
+	    where  EWM = #{ewm,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getRawFileCountByEwm" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select  count(EWM)
+    from J_RAWFILE
+    where  FILE_STATUS &gt; 1
+    and EWM = #{ewm,jdbcType=VARCHAR}
+  </select>
+</mapper>

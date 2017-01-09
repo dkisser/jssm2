@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.CAhzMapper">
+  
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.CAhz">
+    <result column="DM" jdbcType="VARCHAR" property="dm" />
+    <result column="AHZ" jdbcType="VARCHAR" property="ahz" />
+    <result column="YJFL" jdbcType="VARCHAR" property="yjfl" />
+    <result column="CBTS" jdbcType="VARCHAR" property="cbts" />
+    <result column="PYM" jdbcType="VARCHAR" property="pym" />
+    <result column="TYBZ" jdbcType="CHAR" property="tybz" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="YJFLMS" jdbcType="VARCHAR" property="yjflms"/>
+    <result column="CBTSMS" jdbcType="VARCHAR" property="cbtsms" />
+  </resultMap>
+  
+    <resultMap id="YJFLMap" type="org.lf.jssm.db.pojo.CAjuanYjfl">
+  	 <result column="DM" jdbcType="VARCHAR" property="dm" />
+  	  <result column="MC" jdbcType="VARCHAR" property="mc" />
+  </resultMap>
+  
+  <resultMap id="JGDMMap" type="org.lf.jssm.db.pojo.CJgdm">
+  	 <result column="DM" jdbcType="VARCHAR" property="dm" />
+  	  <result column="MC" jdbcType="VARCHAR" property="mc" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    DM, AHZ, YJFL, CBTS, PYM, TYBZ, REMARK
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select c1.dm DM,  AHZ, YJFL, CBTS, PYM,c1.tybz TYBZ,c1.remark REMARK ,c2.mc YJFLMS ,c3.mc CBTSMS 
+    from  C_AHZ c1 left outer join c_ajuan_yjfl c2 on c1.yjfl=c2.dm
+    left outer join c_jgdm c3 on c1.cbts=c3.dm order by c1.dm asc
+  </select>
+  
+  <select id="selectById" parameterType="String" resultMap="BaseResultMap">
+  	select c1.dm DM,  AHZ, YJFL, CBTS, PYM,c1.tybz TYBZ,c1.remark REMARK ,c2.mc YJFLMS ,c3.mc CBTSMS 
+    from  C_AHZ c1 left outer join c_ajuan_yjfl c2 on c1.yjfl=c2.dm
+    left outer join c_jgdm c3 on c1.cbts=c3.dm 
+    <where>
+    <if test="_parameter!=null">
+    	c1.dm=#{dm,jdbcType=VARCHAR}
+    </if>
+    </where>
+  </select>
+  
+  <select id="findOtherAhz" resultType="java.lang.String">
+  	select distinct REGEXP_SUBSTR(ah, '[^)]+字') ahz from j_jz
+	minus
+	select ahz from c_ahz
+  </select>
+  
+  
+  
+  <select id="findAllYJFL" resultMap="YJFLMap">
+  	select dm,mc from C_AJUAN_YJFL
+  </select>
+  
+  <select id="findAllCBTS" resultMap="JGDMMap">
+  	select dm,mc from c_jgdm t where length(dm) = 4 order by dm
+  </select>
+  
+  <select id="findMaxAhzdm" resultType="Integer">
+  	select to_number(substr(max(a1.dm), 8, 3)) from c_ahz a1
+	where a1.dm like (
+  	select yjfl || cbts || '%' from c_ahz a2 where a1.dm = a2.dm
+	) and a1.yjfl = '005' and a1.cbts = '0202'
+  </select>
+  
+  <insert id="insertRecord" parameterType="org.lf.jssm.db.pojo.CAhz">
+    insert into C_AHZ (DM, AHZ, YJFL, 
+      CBTS, PYM, TYBZ, REMARK
+      )
+    values (#{dm,jdbcType=VARCHAR}, #{ahz,jdbcType=VARCHAR}, #{yjfl,jdbcType=VARCHAR}, 
+      #{cbts,jdbcType=VARCHAR}, #{pym,jdbcType=VARCHAR}, #{tybz,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+ 
+ 
+  <update id="updateRecord" parameterType="org.lf.jssm.db.pojo.CAhz">
+  	update C_AHZ 
+  	set ahz=#{ahz,jdbcType=VARCHAR},yjfl=#{yjfl,jdbcType=VARCHAR},
+  	cbts=#{cbts,jdbcType=VARCHAR},pym=#{pym,jdbcType=VARCHAR},tybz=#{tybz,jdbcType=CHAR},remark=#{remark,jdbcType=VARCHAR}
+  	where dm=#{dm,jdbcType=VARCHAR}
+  </update>
+ 
+  
+  
+</mapper>

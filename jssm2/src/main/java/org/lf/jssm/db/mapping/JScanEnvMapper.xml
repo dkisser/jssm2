@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.JScanEnvMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.JScanEnv">
+    <id column="ID" jdbcType="CHAR" property="id" />
+    <result column="ENV_KEY" jdbcType="VARCHAR" property="envKey" />
+    <result column="ENV_VALUE" jdbcType="VARCHAR" property="envValue" />
+    <result column="SCANER_ID" jdbcType="DECIMAL" property="scanerId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ENV_KEY, ENV_VALUE, SCANER_ID
+  </sql>
+  
+  <select id="selectByJScanEnv" parameterType="org.lf.jssm.db.pojo.JScanEnv" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from J_SCAN_ENV
+    <where>
+          <if test="envKey != null">
+	        and ENV_KEY = #{envKey,jdbcType=VARCHAR}
+	      </if>
+	      <if test="envValue != null">
+	        and ENV_VALUE = #{envValue,jdbcType=VARCHAR}
+	      </if>
+	      <if test="scanerId != null">
+	        and SCANER_ID = #{scanerId,jdbcType=DECIMAL}
+	      </if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from J_SCAN_ENV
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.JScanEnv">
+    insert into J_SCAN_ENV (ID, ENV_KEY, ENV_VALUE, SCANER_ID)
+    values (#{id,jdbcType=CHAR}, #{envKey,jdbcType=VARCHAR}, #{envValue,jdbcType=VARCHAR}, 
+      #{scanerId,jdbcType=DECIMAL})
+  </insert>
+  
+  <update id="update" parameterType="org.lf.jssm.db.pojo.JScanEnv">
+    update J_SCAN_ENV
+    <set>
+      <if test="envValue != null">
+        ENV_VALUE = #{envValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <where>
+        <if test="envKey != null">
+        	and ENV_KEY = #{envKey,jdbcType=VARCHAR}
+      	</if>
+        <if test="scanerId != null">
+        	and SCANER_ID = #{scanerId,jdbcType=DECIMAL}
+      	</if>
+    </where>
+  </update>
+</mapper>

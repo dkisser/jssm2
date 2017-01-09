@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.CSPCXMapper">
+  <resultMap id="CSPCX" type="org.lf.jssm.db.pojo.CSPCX">
+		<result column="dm" jdbcType="VARCHAR" property="dm" /> 
+ 		<result column="mc" jdbcType="VARCHAR" property="mc" /> 
+ 		<result column="pym" jdbcType="VARCHAR" property="pym" />
+ 		<result column="tybz" jdbcType="CHAR" property="tybz" /> 
+ 		<result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>  
+</mapper>

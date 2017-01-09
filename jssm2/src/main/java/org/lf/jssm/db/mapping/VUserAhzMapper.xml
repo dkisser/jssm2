@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.VUserAhzMapper">
+	<resultMap  id="vUserAhz" type="org.lf.jssm.db.pojo.VUserAhz">
+		<result column="ahz" jdbcType="VARCHAR" property="ahz"/>
+		<result column="yjfl" jdbcType="VARCHAR" property="yjfl"/>
+		<result column="cbt" jdbcType="VARCHAR" property="cbt"/>
+		<result column="user_id" jdbcType="NUMERIC" property="user_id"/>
+		<result column="uname" jdbcType="VARCHAR" property="uname"/>
+		<result column="role_id" jdbcType="NUMERIC" property="role_id"/>
+	</resultMap>
+</mapper>

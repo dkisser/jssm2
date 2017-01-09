@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.CRylxMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.CRylx">
+    <result column="DM" jdbcType="VARCHAR" property="dm" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="PYM" jdbcType="VARCHAR" property="pym" />
+    <result column="TYBZ" jdbcType="CHAR" property="tybz" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.CRylx">
+    insert into C_RYLX (DM, MC, PYM, 
+      TYBZ, REMARK)
+    values (#{dm,jdbcType=VARCHAR}, #{mc,jdbcType=VARCHAR}, #{pym,jdbcType=VARCHAR}, 
+      #{tybz,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+</mapper>

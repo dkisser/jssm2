@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.CAjuanLxMapper">
+  <resultMap id="CAjuanLx" type="org.lf.jssm.db.pojo.CAjuanLx">
+		<result column="dm" jdbcType="VARCHAR" property="dm" /> 
+ 		<result column="mc" jdbcType="VARCHAR" property="mc" /> 
+ 		<result column="pym" jdbcType="VARCHAR" property="pym" />
+ 		<result column="tybz" jdbcType="CHAR" property="tybz" /> 
+ 		<result column="remark" jdbcType="VARCHAR" property="remark" />
+ 		<result column="bl" jdbcType="DOUBLE" property="bl" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.CAjuanLx">
+		insert into c_ajuan_lx(dm, mc, pym,tybz,remark,bl)
+		values (#{dm,jdbcType=VARCHAR}, #{mc,jdbcType=VARCHAR},
+		#{pym,jdbcType=VARCHAR},
+		#{tybz,jdbcType=CHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{bl,jdbcType=DOUBLE})
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from c_ajuan_lx
+		where dm = #{dm,jdbcType=VARCHAR}
+	</delete>  
+  
+</mapper>

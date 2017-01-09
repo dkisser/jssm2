@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.JEnvMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.JEnv">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ENV_KEY" jdbcType="VARCHAR" property="envKey" />
+    <result column="ENV_VALUE" jdbcType="VARCHAR" property="envValue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ENV_KEY, ENV_VALUE
+  </sql>
+  <select id="selectEnv" parameterType="org.lf.jssm.db.pojo.JEnv" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from J_ENV
+    <where>
+        <if test="envKey != null">
+    		and ENV_KEY = #{envKey,jdbcType=VARCHAR}
+        </if>
+	</where>
+  </select>
+  <!-- 查询数据表中所有记录 -->
+  <select id="findAllRecords"  resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+	from j_env
+  </select>
+  <!-- 根据id查询一条记录 -->
+  <select id="findById" parameterType="Short" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+	from j_env where id=#{id,jdbcType=DECIMAL}
+  </select>
+  <!-- 修改环境参数表的环境值字段-->
+  <update id="updateEnvValue" parameterType="org.lf.jssm.db.pojo.JEnv">
+  	update j_env set env_value=#{envValue} 
+  	<where>
+  		<if test="id!=null">
+  			id=#{id,jdbcType=DECIMAL}
+  		</if>
+  	</where>
+  </update>
+  <select id="selectAllEnv"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from J_ENV
+  </select>
+</mapper>

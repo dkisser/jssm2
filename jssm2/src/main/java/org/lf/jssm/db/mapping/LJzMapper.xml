@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.LJzMapper">
+	<resultMap id="Ljz" type="org.lf.jssm.db.pojo.LJz">
+		<result column="id" jdbcType="CHAR" property="id" />
+		<result column="jzewm" jdbcType="VARCHAR" property="jzewm" />
+		<result column="operation" jdbcType="CHAR" property="operation" />
+		<result column="oper_date" jdbcType="TIMESTAMP" property="oper_date" />
+		<result column="operator_id" jdbcType="VARCHAR" property="operator_id" />
+	</resultMap>
+	
+	<resultMap id="LjzModel" type="org.lf.jssm.service.model.LJzModel">
+		<result column="id" jdbcType="CHAR" property="id" />
+		<result column="jzewm" jdbcType="VARCHAR" property="jzewm" />
+		<result column="operation" jdbcType="CHAR" property="operation" />
+		<result column="oper_date" jdbcType="TIMESTAMP" property="oper_date" />
+		<result column="operator_id" jdbcType="VARCHAR" property="operator_id" />
+		<result column="jzid" jdbcType="VARCHAR" property="jzid" />
+		<result column="jh" jdbcType="DECIMAL" property="jh" />
+		<result column="jzewm" jdbcType="VARCHAR" property="jzewm" />
+		<result column="zlfs" jdbcType="VARCHAR" property="zlfs" />
+		<result column="ajewm" jdbcType="VARCHAR" property="ajewm" />
+		<result column="aqjb" jdbcType="VARCHAR" property="aqjb" />
+		<result column="status" jdbcType="DECIMAL" property="status" />
+		<result column="jzlx" jdbcType="VARCHAR" property="jzlx" />
+		<result column="fymc" jdbcType="VARCHAR" property="fymc" />
+		<result column="jzmc" jdbcType="VARCHAR" property="jzmc" />
+		<result column="ah" jdbcType="VARCHAR" property="ah" />
+		<result column="dsr" jdbcType="VARCHAR" property="dsr" />
+		<result column="ayms" jdbcType="VARCHAR" property="ayms" />
+		<result column="spz" jdbcType="VARCHAR" property="spz" />
+		<result column="cbbm" jdbcType="VARCHAR" property="cbbm" />
+		<result column="cbr" jdbcType="VARCHAR" property="cbr" />
+		<result column="sjy" jdbcType="VARCHAR" property="sjy" />
+		<result column="larq" jdbcType="TIMESTAMP" property="larq" />
+		<result column="jarq" jdbcType="TIMESTAMP" property="jarq" />
+		<result column="cx1" jdbcType="VARCHAR" property="cx1" />
+		<result column="jg1" jdbcType="VARCHAR" property="jg1" />
+		<result column="cx2" jdbcType="VARCHAR" property="cx2" />
+		<result column="jg2" jdbcType="VARCHAR" property="jg2" />
+		<result column="gdrq" jdbcType="TIMESTAMP" property="gdrq" />
+		<result column="gdhs" jdbcType="DECIMAL" property="gdhs" />
+		<result column="bcqx" jdbcType="VARCHAR" property="bcqx" />
+		<result column="tjlb" jdbcType="VARCHAR" property="tjlb" />
+		<result column="CREATOR_ID" jdbcType="DECIMAL" property="creator_id" />
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="create_date" />
+		<result column="SYYM" jdbcType="DECIMAL" property="syym" />
+	</resultMap>
+
+	<resultMap id="User" type="org.lf.jssm.db.pojo.ChuUser">
+		<id column="USER_ID" property="userId" jdbcType="DECIMAL" />
+		<result column="UPW" property="upw" jdbcType="VARCHAR" />
+		<result column="UNAME" property="uname" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="ZWDM" property="zwdm" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="SALT" property="salt" jdbcType="VARCHAR" />
+		<result column="VERIFY" property="verify" jdbcType="DECIMAL" />
+		<result column="TOKEN" property="token" jdbcType="VARCHAR" />
+		<result column="BMDM" property="bmdm" jdbcType="VARCHAR" />
+		<result column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insert" parameterType="org.lf.jssm.db.pojo.LJz">
+		insert into
+		L_JZ(id,jzewm,operation,oper_date,operator_id)
+		values
+		(#{id,jdbcType=CHAR},#{jzewm,jdbcType=VARCHAR},#{operation,jdbcType=CHAR},#{oper_date,jdbcType=TIMESTAMP
+		},#{operator_id,jdbcType=INTEGER})
+	</insert>
+
+	<select id="findjzLogInfo" resultMap="LjzModel" parameterType="org.lf.jssm.service.model.LJzParam">
+		select  l.* , v.* , rownum from l_jz l , v_jz v  
+		where l.jzewm = v.jzewm and rownum &lt;= 100
+			<if test="operation != null">
+				and operation = #{operation,jdbcType=VARCHAR}
+			</if>
+			<if test="operator_id != null">
+				and operator_id = #{operator_id,jdbcType=INTEGER}
+			</if>
+			<if test="beginDate != null">
+				and oper_date between #{beginDate,jdbcType=TIMESTAMP} and #{endDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="jzewm != null">
+				and jzewm = #{jzewm,jdbcType=VARCHAR}
+			</if>
+			<if test="uid != null">
+				and creator_id = #{uid,jdbcType=VARCHAR}
+			</if>
+			<if test="jzlx != null">
+				and jzlx = #{jzlx,jdbcType=VARCHAR}
+			</if>
+			<if test="aqjb != null">
+				and aqjb = #{aqjb,jdbcType=VARCHAR}
+			</if>
+			<if test="bgqx != null">
+				and bcqx = #{bgqx,jdbcType=VARCHAR}
+			</if>
+			<if test="dsr != null">
+				and dsr like CONCAT(CONCAT('%', #{dsr,jdbcType=VARCHAR}), '%')
+			</if>
+			<if test="ayms != null">
+				and ayms like CONCAT(CONCAT('%', #{ayms,jdbcType=VARCHAR}), '%')
+			</if>
+			<if test="jzzt != null">
+				and status = #{jzzt,jdbcType=VARCHAR}
+			</if>
+			<if test="gdnf != null">
+				and to_char(gdrq, 'YYYY')=#{gdnf,jdbcType=VARCHAR}
+			</if>
+			<if test="gdhs != null">
+				and gdhs = #{gdhs,jdbcType=VARCHAR}
+			</if>
+			<if test="larqF != null and larqT !=null">
+				and larq between #{larqF,jdbcType=TIMESTAMP} and #{larqT,jdbcType=TIMESTAMP}
+			</if>
+			<if test="jarqF != null and jarqT !=null">
+				and jarq between #{jarqF,jdbcType=TIMESTAMP} and #{jarqT,jdbcType=TIMESTAMP}
+			</if>
+			<if test="fmEwm != null">
+				and jzewm = #{fmEwm,jdbcType=VARCHAR}
+			</if>
+			<if test="year !=null or spzh != null or ajbh !=null">
+				and ah like '%'||#{year,jdbcType=VARCHAR}||'%'||#{spzh,jdbcType=VARCHAR}||'%'||#{ajbh,jdbcType=VARCHAR}||'%'
+			</if>
+			 order by oper_date desc
+	</select>
+
+</mapper>

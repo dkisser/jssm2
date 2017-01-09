@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.JAjjzMapper">
+  <resultMap id="JAjjz" type="org.lf.jssm.db.pojo.JAjjz">
+ 		<result column="id" jdbcType="VARCHAR" property="id" /> 
+ 		<result column="JZ_EWM" jdbcType="VARCHAR" property="jz_ewm" />
+ 		<result column="aj_EWM" jdbcType="VARCHAR" property="aj_ewm" />
+  </resultMap>  
+  
+</mapper>

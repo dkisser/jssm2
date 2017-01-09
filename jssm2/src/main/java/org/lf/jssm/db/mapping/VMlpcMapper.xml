@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.VMlpcMapper">
+  <resultMap id="VMlpc" type="org.lf.jssm.db.pojo.VMlpc">
+ 		<result column="DM" jdbcType="VARCHAR" property="dm" /> 
+ 		<result column="FYDM" jdbcType="VARCHAR" property="fydm" />
+ 		<result column="QYND" jdbcType="VARCHAR" property="qynd" />
+ 		<result column="ZHDM" jdbcType="VARCHAR" property="zhdm" />
+ 		<result column="LX" jdbcType="VARCHAR" property="lx" />
+ 		<result column="PCMC" jdbcType="VARCHAR" property="pcmc" />
+ 		<result column="PYM" jdbcType="VARCHAR" property="pym" />
+ 		<result column="TYBZ" jdbcType="VARCHAR" property="tybz" />
+ 		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+ 		<result column="STATUS" jdbcType="VARCHAR" property="status" />
+  </resultMap>  
+  
+</mapper>

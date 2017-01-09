@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.CYldnMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.CYldn">
+    <result column="DM" jdbcType="VARCHAR" property="dm" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="PYM" jdbcType="VARCHAR" property="pym" />
+    <result column="TYBZ" jdbcType="CHAR" property="tybz" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+  </resultMap>
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.CYldn">
+    insert into C_YLDN (DM, MC, PYM, 
+      TYBZ, REMARK, IP)
+    values (#{dm,jdbcType=VARCHAR}, #{mc,jdbcType=VARCHAR}, #{pym,jdbcType=VARCHAR}, 
+      #{tybz,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR})
+  </insert>
+</mapper>

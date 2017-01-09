@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.CJgdmMapper">
+    <resultMap id="CJgdm" type="org.lf.jssm.db.pojo.CJgdm">
+    	<result column="dm" jdbcType="VARCHAR" property="dm" /> 
+		<result column="mc" jdbcType="VARCHAR" property="mc" /> 
+ 		<result column="pym" jdbcType="VARCHAR" property="pym"/> 
+ 		<result column="tybz" jdbcType="CHAR" property="tybz" />	
+ 		<result column="remark" jdbcType="VARCHAR" property="remark" /> 
+ 		<result column="sjdm" jdbcType="VARCHAR" property="sjdm"/> 
+ 		<result column="fydm" jdbcType="DOUBLE" property="fydm" />	
+   </resultMap>  
+   <resultMap type="org.lf.jssm.db.pojo.CJgdm" id="SjmcMap">
+		<result column="SJDM" jdbcType="VARCHAR" property="dm"/>
+		<result column="MC" jdbcType="VARCHAR" property="mc"/>
+	</resultMap>
+</mapper>

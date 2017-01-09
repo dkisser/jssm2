@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.jssm.db.dao.CFyMapper" >
+  <resultMap id="CFyMap" type="org.lf.jssm.db.pojo.CFy" >
+    <id column="DM" property="dm" jdbcType="DECIMAL" />
+    <result column="FJM" property="fjm" jdbcType="CHAR" />
+    <result column="FYMC" property="fymc" jdbcType="VARCHAR" />
+    <result column="PYM" property="pym" jdbcType="VARCHAR" />
+  </resultMap>
+  
+</mapper>

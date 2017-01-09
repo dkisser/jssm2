@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.CAjuanMlMapper">
+	<resultMap id="CAjuanMlMap" type="org.lf.jssm.db.pojo.CAjuanMl">
+		<result column="dm" jdbcType="VARCHAR" property="dm" />
+		<result column="pcdm" jdbcType="VARCHAR" property="pcdm" />
+		<result column="id" jdbcType="NUMERIC" property="id" />
+		<result column="mc" jdbcType="VARCHAR" property="mc" />
+		<result column="pym" jdbcType="VARCHAR" property="pym" />
+		<result column="tybz" jdbcType="CHAR" property="tybz" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+
+	</resultMap>
+
+	<insert id="insert" parameterType="org.lf.jssm.db.pojo.CAjuanMl">
+		insert into c_ajuan_ml(dm,
+		pcdm, id, mc, pym, tybz, remark)
+		values (#{dm,jdbcType=VARCHAR},
+		#{pcdm,jdbcType=VARCHAR},
+		#{id,jdbcType=NUMERIC},#{mc,jdbcType=VARCHAR},
+		#{pym,jdbcType=VARCHAR},#{tybz,jdbcType=CHAR},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="getMlInfoByMldm" parameterType="java.lang.String" resultMap="CAjuanMlMap">
+	    select * from c_ajuan_ml
+	    where dm = #{mldm,jdbcType=VARCHAR}
+	</select>
+</mapper>

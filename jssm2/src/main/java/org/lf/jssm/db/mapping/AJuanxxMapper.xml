@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.lf.jssm.db.dao.AJuanxxMapper">
+	<resultMap id="ajxxResultMap" type="org.lf.jssm.db.pojo.AJuanxx">
+    <id column="AHDM" jdbcType="VARCHAR" property="ahdm" />
+    <result column="AH" jdbcType="VARCHAR" property="ah" />
+    <result column="FYDM" jdbcType="VARCHAR" property="fydm" />
+    <result column="FYDMMS" jdbcType="VARCHAR" property="fydmms" />
+    <result column="DZ" jdbcType="VARCHAR" property="dz" />
+    <result column="AJLX" jdbcType="VARCHAR" property="ajlx" />
+    <result column="LARQ" jdbcType="VARCHAR" property="larq" />
+    <result column="JARQ" jdbcType="VARCHAR" property="jarq" />
+    <result column="SXJMRQ" jdbcType="VARCHAR" property="sxjmrq" />
+    <result column="SAAY" jdbcType="DECIMAL" property="saay" />
+    <result column="SAAYMS" jdbcType="VARCHAR" property="saayms" />
+    <result column="AYMS" jdbcType="VARCHAR" property="ayms" />
+    <result column="DSR" jdbcType="VARCHAR" property="dsr" />
+    <result column="AJMC" jdbcType="VARCHAR" property="ajmc" />
+    <result column="JAFS" jdbcType="VARCHAR" property="jafs" />
+    <result column="JAFSMS" jdbcType="VARCHAR" property="jafsms" />
+    <result column="CBBM" jdbcType="VARCHAR" property="cbbm" />
+    <result column="CBBMMS" jdbcType="VARCHAR" property="cbbmms" />
+    <result column="CBR" jdbcType="VARCHAR" property="cbr" />
+    <result column="CBRMS" jdbcType="VARCHAR" property="cbrms" />
+    <result column="ZT" jdbcType="CHAR" property="zt" />
+    <result column="AJZTMS" jdbcType="VARCHAR" property="ajztms" />
+    <result column="SPZ" jdbcType="VARCHAR" property="spz" />
+    <result column="SPZMS" jdbcType="VARCHAR" property="spzms" />
+    <result column="SJY" jdbcType="VARCHAR" property="sjy" />
+    <result column="SJYMS" jdbcType="VARCHAR" property="sjyms" />
+  </resultMap>
+  
+  <sql id="Base_Column">
+    AHDM, AH, FYDM, FYDMMS, DZ, AJLX, LARQ, JARQ, SXJMRQ, SAAY, SAAYMS, AYMS, DSR, AJMC, 
+    JAFS, JAFSMS, CBBM, CBBMMS, CBR, CBRMS, ZT, AJZTMS, SPZ, SJY, SJYMS
+  </sql>
+  
+  <select id="selectAll" resultMap="ajxxResultMap">
+  	select <include refid="Base_Column" /> from j_ajxx
+  </select>
+  
+   <select id="selectByAh" resultMap="ajxxResultMap" parameterType="String"> 
+   	select <include refid="Base_Column"/> from j_ajxx  
+   	<if test="_parameter!=null"> 
+   		where ah=#{ah,jdbcType=VARCHAR}
+   	</if> 
+   </select> 
+  
+  <insert id="insertRecord" parameterType="org.lf.jssm.db.pojo.AJuanxx">
+  	insert into J_AJXX (AHDM, AH, FYDM, 
+      FYDMMS, DZ, AJLX, LARQ, 
+      JARQ, SXJMRQ, SAAY, 
+      SAAYMS, AYMS, DSR, 
+      AJMC, JAFS, JAFSMS, 
+      CBBM, CBBMMS, CBR, 
+      CBRMS, ZT, AJZTMS, SPZ,SPZMS,
+      SJY, SJYMS)
+    values (#{ahdm,jdbcType=VARCHAR}, #{ah,jdbcType=VARCHAR}, #{fydm,jdbcType=VARCHAR}, 
+      #{fydmms,jdbcType=VARCHAR}, #{dz,jdbcType=VARCHAR}, #{ajlx,jdbcType=VARCHAR}, #{larq,jdbcType=VARCHAR}, 
+      #{jarq,jdbcType=VARCHAR}, #{sxjmrq,jdbcType=VARCHAR}, #{saay,jdbcType=DECIMAL}, 
+      #{saayms,jdbcType=VARCHAR}, #{ayms,jdbcType=VARCHAR}, #{dsr,jdbcType=VARCHAR}, 
+      #{ajmc,jdbcType=VARCHAR}, #{jafs,jdbcType=VARCHAR}, #{jafsms,jdbcType=VARCHAR}, 
+      #{cbbm,jdbcType=VARCHAR}, #{cbbmms,jdbcType=VARCHAR}, #{cbr,jdbcType=VARCHAR}, 
+      #{cbrms,jdbcType=VARCHAR}, #{zt,jdbcType=CHAR}, #{ajztms,jdbcType=VARCHAR}, #{spz,jdbcType=VARCHAR},#{spzms,jdbcType=VARCHAR},  
+      #{sjy,jdbcType=VARCHAR}, #{sjyms,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateRecord" parameterType="org.lf.jssm.db.pojo.AJuanxx">
+  	  update J_AJXX
+    set AHDM = #{ahdm,jdbcType=VARCHAR},
+      AH = #{ah,jdbcType=VARCHAR},
+      FYDM = #{fydm,jdbcType=VARCHAR},
+      FYDMMS = #{fydmms,jdbcType=VARCHAR},
+      DZ = #{dz,jdbcType=VARCHAR},
+      AJLX = #{ajlx,jdbcType=VARCHAR},
+      LARQ = #{larq,jdbcType=VARCHAR},
+      JARQ = #{jarq,jdbcType=VARCHAR},
+      SXJMRQ = #{sxjmrq,jdbcType=VARCHAR},
+      SAAY = #{saay,jdbcType=DECIMAL},
+      SAAYMS = #{saayms,jdbcType=VARCHAR},
+      AYMS = #{ayms,jdbcType=VARCHAR},
+      DSR = #{dsr,jdbcType=VARCHAR},
+      AJMC = #{ajmc,jdbcType=VARCHAR},
+      JAFS = #{jafs,jdbcType=VARCHAR},
+      JAFSMS = #{jafsms,jdbcType=VARCHAR},
+      CBBM = #{cbbm,jdbcType=VARCHAR},
+      CBBMMS = #{cbbmms,jdbcType=VARCHAR},
+      CBR = #{cbr,jdbcType=VARCHAR},
+      CBRMS = #{cbrms,jdbcType=VARCHAR},
+      ZT = #{zt,jdbcType=CHAR},
+      AJZTMS = #{ajztms,jdbcType=VARCHAR},
+      SPZ = #{spz,jdbcType=VARCHAR},
+      SPZMS = #{spzms,jdbcType=VARCHAR},
+      SJY = #{sjy,jdbcType=VARCHAR},
+      SJYMS = #{sjyms,jdbcType=VARCHAR}
+       <where> 
+         <if test="ah!=null">
+              AH = #{ah,jdbcType=VARCHAR}
+          </if>
+      </where>
+  </update>
+  
+</mapper>

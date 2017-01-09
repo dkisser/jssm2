@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.VRawfileMapper">
+  <resultMap id="BaseResultMap" type="org.lf.jssm.db.pojo.VRawfile">
+    <result column="SCANER_ID" jdbcType="DECIMAL" property="scanerId" />
+    <result column="MODIFY_DATE" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="YEAR" jdbcType="VARCHAR" property="year" />
+    <result column="MONTH" jdbcType="VARCHAR" property="month" />
+    <result column="DAY" jdbcType="VARCHAR" property="day" />
+    <result column="HOUR" jdbcType="VARCHAR" property="hour" />
+    <result column="RAW_JPG" jdbcType="VARCHAR" property="rawJpg" />
+    <result column="FILE_VERSION" jdbcType="INTEGER" property="fileVersion" />
+  </resultMap>
+  
+  <select id="getHistoryYear" parameterType="org.lf.jssm.db.pojo.VRawfile" resultType="java.lang.String">
+      select DISTINCT
+    	YEAR
+	    from V_RAWFILE
+	    where SCANER_ID = #{scanerId,jdbcType=INTEGER}
+	    and MODIFY_DATE &gt;=#{startDate,jdbcType=TIMESTAMP}
+	    and MODIFY_DATE &lt;=#{endDate,jdbcType=TIMESTAMP}
+	    and RAW_JPG != '10000'
+	    order by YEAR
+  </select>
+  
+  <select id="getHistoryMonth" parameterType="org.lf.jssm.db.pojo.VRawfile" resultType="java.lang.String">
+      select DISTINCT
+    	MONTH
+	    from V_RAWFILE
+	    where SCANER_ID = #{scanerId,jdbcType=INTEGER}
+	    and YEAR = #{year,jdbcType=VARCHAR}
+	    and MODIFY_DATE &gt;=#{startDate,jdbcType=TIMESTAMP}
+	    and MODIFY_DATE &lt;=#{endDate,jdbcType=TIMESTAMP}
+	    and RAW_JPG != '10000'
+	    order by MONTH
+  </select>
+  
+  <select id="getHistoryDay" parameterType="org.lf.jssm.db.pojo.VRawfile" resultType="java.lang.String">
+      select DISTINCT
+    	DAY
+	    from V_RAWFILE
+	    where SCANER_ID = #{scanerId,jdbcType=INTEGER}
+	    and YEAR = #{year,jdbcType=VARCHAR}
+	    and MONTH = #{month,jdbcType=VARCHAR}
+	    and MODIFY_DATE &gt;=#{startDate,jdbcType=TIMESTAMP}
+	    and MODIFY_DATE &lt;=#{endDate,jdbcType=TIMESTAMP}
+	    and RAW_JPG != '10000'
+	    order by DAY
+  </select>
+  
+  <select id="getHistoryHour" parameterType="org.lf.jssm.db.pojo.VRawfile" resultType="java.lang.String">
+      select DISTINCT
+    	HOUR
+	    from V_RAWFILE
+	    where SCANER_ID = #{scanerId,jdbcType=INTEGER}
+	    and YEAR = #{year,jdbcType=VARCHAR}
+	    and MONTH = #{month,jdbcType=VARCHAR}
+	    and DAY = #{day,jdbcType=VARCHAR}
+	    and MODIFY_DATE &gt;=#{startDate,jdbcType=TIMESTAMP}
+	    and MODIFY_DATE &lt;=#{endDate,jdbcType=TIMESTAMP}
+	    and RAW_JPG != '10000'
+	    order by HOUR
+  </select>
+  
+  <select id="getImgsEwm" parameterType="org.lf.jssm.db.pojo.VRawfile" resultMap="BaseResultMap">
+      select RAW_JPG,FILE_VERSION
+	    from V_RAWFILE
+	    where YEAR = #{year,jdbcType=VARCHAR}
+	    and MONTH = #{month,jdbcType=VARCHAR}
+	    and DAY = #{day,jdbcType=VARCHAR}
+	    and HOUR = #{hour,jdbcType=VARCHAR}
+	    and SCANER_ID = #{scanerId,jdbcType=DECIMAL}
+	    and RAW_JPG != '10000'
+  </select>
+</mapper>

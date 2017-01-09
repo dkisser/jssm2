@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.jssm.db.dao.ChuUserMapper" >
+  <resultMap id="User" type="org.lf.jssm.db.pojo.ChuUser" >
+    <id column="USER_ID" property="userId" jdbcType="DECIMAL" />
+    <result column="UPW" property="upw" jdbcType="VARCHAR" />
+    <result column="UNAME" property="uname" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ZWDM" property="zwdm" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="SALT" property="salt" jdbcType="VARCHAR" />
+    <result column="VERIFY" property="verify" jdbcType="DECIMAL" />
+    <result column="TOKEN" property="token" jdbcType="VARCHAR" />
+    <result column="BMDM" property="bmdm" jdbcType="VARCHAR" />
+    <result column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="UserRole" type="org.lf.jssm.db.pojo.UserRole">
+		<id column="user_id" jdbcType="INTEGER" property="userid" />
+		<result column="uname" jdbcType="VARCHAR" property="uname" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="role_id" jdbcType="VARCHAR" property="role_id" />
+		<result column="role_name" jdbcType="VARCHAR" property="role_name" />
+	</resultMap>
+	
+	<resultMap id="VUser" type="org.lf.jssm.db.pojo.VUser">
+		<id column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="uname" jdbcType="VARCHAR" property="uname" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="zw" jdbcType="VARCHAR" property="zw" />
+		<result column="jg" jdbcType="VARCHAR" property="jg" />
+		<result column="role" jdbcType="VARCHAR" property="role" />
+	</resultMap>
+	
+	
+ 
+ <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from CHU_USER
+    where USER_ID = #{userId}
+  </delete>
+  <insert id="insert" parameterType="org.lf.jssm.db.pojo.ChuUser" >
+    insert into CHU_USER (USER_ID, UPW, UNAME, 
+      NAME, ZWDM, EMAIL, 
+      SALT, VERIFY, TOKEN, 
+      BMDM, ROLE_ID, TYPE
+      )
+    values (#{userId,jdbcType=DECIMAL}, #{upw,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{zwdm,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{verify,jdbcType=DECIMAL}, #{token,jdbcType=VARCHAR}, 
+      #{bmdm,jdbcType=VARCHAR}, #{roleId,jdbcType=DECIMAL}, #{type,jdbcType=VARCHAR}
+      )
+  </insert>
+ 
+</mapper>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.VJzMapper">
+	<resultMap type="org.lf.jssm.db.pojo.VJz" id="VJzMap">
+		<result column="jzid" jdbcType="VARCHAR" property="jzid" />
+		<result column="jh" jdbcType="DECIMAL" property="jh" />
+		<result column="jzewm" jdbcType="VARCHAR" property="jzewm" />
+		<result column="zlfs" jdbcType="VARCHAR" property="zlfs" />
+		<result column="ajewm" jdbcType="VARCHAR" property="ajewm" />
+		<result column="aqjb" jdbcType="VARCHAR" property="aqjb" />
+		<result column="status" jdbcType="DECIMAL" property="status" />
+		<result column="jzlx" jdbcType="VARCHAR" property="jzlx" />
+		<result column="fymc" jdbcType="VARCHAR" property="fymc" />
+		<result column="jzmc" jdbcType="VARCHAR" property="jzmc" />
+		<result column="ah" jdbcType="VARCHAR" property="ah" />
+		<result column="dsr" jdbcType="VARCHAR" property="dsr" />
+		<result column="ayms" jdbcType="VARCHAR" property="ayms" />
+		<result column="spz" jdbcType="VARCHAR" property="spz" />
+		<result column="cbbm" jdbcType="VARCHAR" property="cbbm" />
+		<result column="cbr" jdbcType="VARCHAR" property="cbr" />
+		<result column="sjy" jdbcType="VARCHAR" property="sjy" />
+		<result column="larq" jdbcType="TIMESTAMP" property="larq" />
+		<result column="jarq" jdbcType="TIMESTAMP" property="jarq" />
+		<result column="cx1" jdbcType="VARCHAR" property="cx1" />
+		<result column="jg1" jdbcType="VARCHAR" property="jg1" />
+		<result column="cx2" jdbcType="VARCHAR" property="cx2" />
+		<result column="jg2" jdbcType="VARCHAR" property="jg2" />
+		<result column="gdrq" jdbcType="TIMESTAMP" property="gdrq" />
+		<result column="gdhs" jdbcType="DECIMAL" property="gdhs" />
+		<result column="bcqx" jdbcType="VARCHAR" property="bcqx" />
+		<result column="tjlb" jdbcType="VARCHAR" property="tjlb" />
+		<result column="CREATOR_ID" jdbcType="DECIMAL" property="creator_id" />
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="create_date" />
+		<result column="SYYM" jdbcType="DECIMAL" property="syym" />
+	</resultMap>
+	<resultMap type="org.lf.jssm.service.model.AjjyOuterHistoryModel" id="historyMap">
+		<result column="rymc" jdbcType="VARCHAR" property="rymc" />
+		<result column="ksrq" jdbcType="TIMESTAMP" property="ksrq" />
+		<result column="yldn" jdbcType="VARCHAR" property="yldn" />
+		<result column="ah" jdbcType="VARCHAR" property="ah" />
+		<result column="jzlx" jdbcType="VARCHAR" property="jzlx" />
+		<result column="jh" jdbcType="VARCHAR" property="jh" />
+		<result column="aqjb" jdbcType="DECIMAL" property="aqjb" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="gdrq" jdbcType="TIMESTAMP" property="gdrq" />
+		<result column="gdhs" jdbcType="VARCHAR" property="gdhs" />
+	</resultMap>
+
+	<select id="deleteJZALLbyjzewm" statementType="CALLABLE">
+	      <![CDATA[
+	          call "DelJz"(#{jzewm,mode=IN,jdbcType=VARCHAR})
+	      ]]>
+
+	</select>
+
+	<select id="selectListByLike" resultMap="VJzMap">
+		select * from v_jz where dsr like CONCAT(CONCAT('%', #{dsr}), '%')
+		and ah like CONCAT(CONCAT('%', #{ah}), '%')
+		and larq &gt;= #{larqF,jdbcType=TIMESTAMP}
+		and larq &lt;= #{larqT,jdbcType=TIMESTAMP}
+		<if test="jarqF!=null">
+			and jarq &gt;= #{jarqF,jdbcType=TIMESTAMP}
+		</if>
+		<if test="jarqT!=null">
+			and jarq &lt;= #{jarqT,jdbcType=TIMESTAMP}
+		</if>
+	</select>
+
+	<select id="select_query_list" resultMap="org.lf.jssm.db.dao.VJzMapper.VJzMap"
+		parameterType="org.lf.jssm.service.model.JZQueryParam">
+		select * from v_jz
+		where rownum &lt;= 100 
+		<if test="uid != null">
+			and creator_id = #{uid,jdbcType=VARCHAR}
+		</if>
+		<if test="jzlx != null">
+			and jzlx = #{jzlx,jdbcType=VARCHAR}
+		</if>
+		<if test="aqjb != null">
+			and aqjb = #{aqjb,jdbcType=VARCHAR}
+		</if>
+		<if test="bgqx != null">
+			and bcqx = #{bgqx,jdbcType=VARCHAR}
+		</if>
+		<if test="dsr != null">
+			and dsr like CONCAT(CONCAT('%', #{dsr,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="ayms != null">
+			and ayms like CONCAT(CONCAT('%', #{ayms,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="jzzt != null">
+			and status = #{jzzt,jdbcType=VARCHAR}
+		</if>
+		<if test="gdnf != null">
+			and to_char(gdrq, 'YYYY')=#{gdnf,jdbcType=VARCHAR}
+		</if>
+		<if test="gdhs != null">
+			and gdhs = #{gdhs,jdbcType=VARCHAR}
+		</if>
+		<if test="larqF != null and larqT !=null">
+			and larq between #{larqF,jdbcType=TIMESTAMP} and #{larqT,jdbcType=TIMESTAMP}
+		</if>
+		<if test="jarqF != null and jarqT !=null">
+			and ( (JARQ IS NULL) or (jarq between #{jarqF,jdbcType=TIMESTAMP} and #{jarqT,jdbcType=TIMESTAMP}) )
+		</if>
+		<if test="fmEwm != null">
+			and jzewm = #{fmEwm,jdbcType=VARCHAR}
+		</if>
+		<if test="year !=null or spzh != null or ajbh !=null">
+			and ah like '%'||#{year,jdbcType=VARCHAR}||'%'||#{spzh,jdbcType=VARCHAR}||'%'||#{ajbh,jdbcType=VARCHAR}||'%'
+		</if>
+	</select>
+	
+	<select id="select_outerHistory_list" resultMap="org.lf.jssm.db.dao.VJzMapper.historyMap"
+		parameterType="org.lf.jssm.service.model.AjjyOuterHistoryParam">
+		select wl.rymc rymc,wl.ksrq ksrq,yldn.mc yldn,wl.zjhm zjhm,wl.print print,vjz.ah ah,vjz.jzlx jzlx,vjz.jh jh,vjz.aqjb aqjb,vjz.status status,vjz.gdrq gdrq,vjz.gdhs gdhs
+		from  j_wlry wl,j_jzjy jzjy,v_jz vjz,c_yldn yldn,c_zjlx zj,c_rylx rylx
+		where rownum &lt;= 100  and  wl.id = jzjy.wlry_id and jzjy.jzewm = vjz.jzewm and yldn.dm = djdn and wl.zjlx=zj.dm and wl.rylx = rylx.dm
+		<if test="uid != null">
+			and vjz.creator_id = #{uid,jdbcType=VARCHAR}
+		</if>
+		<if test="jzlx != null">
+			and vjz.jzlx = #{jzlx,jdbcType=VARCHAR}
+		</if>
+		<if test="aqjb != null">
+			and vjz.aqjb = #{aqjb,jdbcType=VARCHAR}
+		</if>
+		<if test="bgqx != null">
+			and vjz.bcqx = #{bgqx,jdbcType=VARCHAR}
+		</if>
+		<if test="dsr != null">
+			and vjz.dsr like CONCAT(CONCAT('%', #{dsr,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="ayms != null">
+			and vjz.ayms like CONCAT(CONCAT('%', #{ayms,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="jzzt != null">
+			and vjz.status = #{jzzt,jdbcType=VARCHAR}
+		</if>
+		<if test="gdnf != null">
+			and to_char(vjz.gdrq, 'YYYY')=#{gdnf,jdbcType=VARCHAR}
+		</if>
+		<if test="gdhs != null">
+			and vjz.gdhs = #{gdhs,jdbcType=VARCHAR}
+		</if>
+		<if test="larqF != null and larqT !=null">
+			and vjz.larq between #{larqF,jdbcType=TIMESTAMP} and #{larqT,jdbcType=TIMESTAMP}
+		</if>
+		<if test="jarqF != null and jarqT !=null">
+			and ( (vjz.jarq is null) or (vjz.jarq between #{jarqF,jdbcType=TIMESTAMP} and #{jarqT,jdbcType=TIMESTAMP} ) )
+		</if>
+		<if test="fmEwm != null">
+			and vjz.jzewm = #{fmEwm,jdbcType=VARCHAR}
+		</if>
+		<if test="year !=null or spzh != null or ajbh !=null">
+			and vjz.ah like '%'||#{year,jdbcType=VARCHAR}||'%'||#{spzh,jdbcType=VARCHAR}||'%'||#{ajbh,jdbcType=VARCHAR}||'%'
+		</if>
+		<if test="rylx != null">
+			and rylx.mc =#{rylx,jdbcType=CHAR} 
+		</if>
+		<if test="djdn != null">
+			and yldn.mc = #{djdn,jdbcType=CHAR}
+		</if>
+		<if test="zjlx != null">
+			and zj.mc =#{zjlx,jdbcType=CHAR}
+		</if>
+		<if test ="gzdw != null">
+			and wl.gzdw like '%'||#{gzdw,jdbcType=VARCHAR}||'%'
+		</if>
+		<if test="zjhm != null">
+			and wl.zjhm = #{zjhm,jdbcType=VARCHAR}
+		</if>
+ 		order by ksrq desc 
+	</select>
+</mapper>

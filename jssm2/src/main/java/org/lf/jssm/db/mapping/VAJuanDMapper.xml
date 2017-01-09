@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.jssm.db.dao.VAJuanDMapper">
+  <resultMap id="vajuand" type="org.lf.jssm.db.pojo.VAJuanD">
+		<id column="jzid" jdbcType="VARCHAR" property="jzid" /> 
+		<result column="jh" jdbcType="INTEGER" property="jh" /> 
+		<result column="pcmc" jdbcType="VARCHAR" property="pcmc" />
+		<result column="pcdm" jdbcType="CHAR" property="pcdm" />  
+		<result column="mldm" jdbcType="VARCHAR" property="mldm" /> 
+		<result column="mlid" jdbcType="INTEGER" property="mlid" /> 
+		<result column="mlmc" jdbcType="VARCHAR" property="mlmc" /> 
+		<result column="ZMLID" jdbcType="CHAR" property="zmlid" />
+	    <result column="ZML" jdbcType="VARCHAR" property="zml" />
+	    <result column="NBBH" jdbcType="DECIMAL" property="nbbh" />
+		<result column="pic_ewm" jdbcType="VARCHAR" property="pic_ewm" /> 
+		<result column="pic_version" jdbcType="INTEGER" property="pic_version" /> 
+		<result column="aj_ewm" jdbcType="VARCHAR" property="aj_ewm" /> 
+		<result column="jz_ewm" jdbcType="VARCHAR" property="jz_ewm" /> 
+  </resultMap>
+  
+  <select id="getAjInfo" parameterType="org.lf.jssm.db.pojo.VAJuanD" resultMap="vajuand">
+      SELECT *
+		FROM
+			V_AJUAN_D
+		<where>
+          <if test="aj_ewm != null">
+	        and V_AJUAN_D.AJ_EWM = #{aj_ewm,jdbcType=VARCHAR}
+	      </if>
+	      <if test="mldm != null">
+	        and V_AJUAN_D.MLDM = #{mldm,jdbcType=CHAR}
+	      </if>
+	      <if test="zml != null">
+	        and V_AJUAN_D.ZML = #{zml,jdbcType=VARCHAR}
+	      </if>
+	      <if test="zmlid != null">
+	        and V_AJUAN_D.ZMLID = #{zmlid,jdbcType=CHAR}
+	      </if>
+    	</where>
+  </select>
+  
+  <select id="selectVajuanDByjzewm" parameterType="java.lang.String" resultMap="vajuand">
+      SELECT
+			ml.mlid,
+			ml.mlmc,
+			ml.mldm,
+			ajd.pic_ewm
+		FROM
+			v_ajuan_ml ml,
+			v_ajuan_d ajd
+		WHERE
+			ml.pcdm = ajd.pcdm (+)
+		AND ml.mlid = ajd.mlid (+)
+		AND (ml.pcdm) IN (
+			SELECT
+				pcdm
+			FROM
+				v_ajuan_d
+			WHERE
+				jz_ewm = #{jzewm,jdbcType=VARCHAR}
+		)
+		AND (
+			ajd.jz_ewm = #{jzewm,jdbcType=VARCHAR}
+			OR ajd.jz_ewm IS NULL
+		)
+		ORDER BY
+			ml.mlid
+  </select>
+  
+  <select id="getPicEwmByCondition" parameterType="org.lf.jssm.db.pojo.VAJuanD" resultType="java.lang.String">
+      SELECT pic_ewm
+		FROM
+			V_AJUAN_D
+		<where>
+          <if test="jz_ewm != null">
+	        and jz_ewm = #{jz_ewm,jdbcType=VARCHAR}
+	      </if>
+	      <if test="mldm != null">
+	        and MLDM = #{mldm,jdbcType=CHAR}
+	      </if>
+	      <if test="mlid != null">
+	        and mlid = #{mlid,jdbcType=INTEGER}
+	      </if>
+    	</where>
+  </select>
+  
+  <select id="getStartNbbhByCondition" parameterType="org.lf.jssm.db.pojo.VAJuanD" resultType="java.lang.Integer">
+      select min(NBBH) from V_AJUAN_D
+		<where>
+          <if test="jz_ewm != null">
+	        and jz_ewm = #{jz_ewm,jdbcType=VARCHAR}
+	      </if>
+	      <if test="mldm != null">
+	        and MLDM = #{mldm,jdbcType=CHAR}
+	      </if>
+	      <if test="mlid != null">
+	        and mlid = #{mlid,jdbcType=INTEGER}
+	      </if>
+    	</where>
+  </select>
+  
+  <select id="getPicCounts" parameterType="org.lf.jssm.db.pojo.VAJuanD" resultType="java.lang.Integer">
+      select COUNT(*) from V_AJUAN_D
+		<where>
+          <if test="jz_ewm != null">
+	        and jz_ewm = #{jz_ewm,jdbcType=VARCHAR}
+	      </if>
+	      <if test="mldm != null">
+	        and MLDM = #{mldm,jdbcType=CHAR}
+	      </if>
+	      <if test="mlid != null">
+	        and mlid = #{mlid,jdbcType=INTEGER}
+	      </if>
+    	</where>
+  </select>
+</mapper>

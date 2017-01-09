@@ -1,0 +1,66 @@
+html,body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.textSty {
+	margin-right: 5px;
+	text-align: right;
+}
+
+.iptSty {
+	padding-right: 10px;
+}
+
+.rowSty {
+	line-height: 30px;
+	height: 30px;
+	align: center;
+}
+
+#tableSty {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.tableSty1 {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.fromto {
+	text-align: center;
+}
+
+.textSty1 {
+	text-align: right;
+}
+
+.iptSty1 {
+	text-align: left;
+}
+
+.dateSty {
+	width: 90px;
+}
+
+.fmewmSty {
+	width: 80px;
+}
+
+.fmewmStyIpt {
+	width: 170px;
+}
+
+.btnSty {
+	width: 55px;
+}
+
+.rowSty1 {
+	line-height: 30px;
+	height: 30px;
+	align: center;
+}
